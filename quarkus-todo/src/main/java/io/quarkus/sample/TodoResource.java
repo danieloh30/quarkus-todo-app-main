@@ -39,6 +39,7 @@ public class TodoResource {
     @POST
     @Transactional
     public Response create(@Valid Todo item) {
+        System.out.println("Thread is " + Thread.currentThread());
         item.persist();
         return Response.status(Status.CREATED).entity(item).build();
     }
@@ -47,6 +48,7 @@ public class TodoResource {
     @Path("/{id}")
     @Transactional
     public Response update(@Valid Todo todo, @PathParam("id") Long id) {
+        System.out.println("Thread is " + Thread.currentThread());
         Todo entity = Todo.findById(id);
         entity.id = id;
         entity.completed = todo.completed;

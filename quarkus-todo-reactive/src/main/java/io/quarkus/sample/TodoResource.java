@@ -46,6 +46,7 @@ public class TodoResource {
 
     @POST
     public Uni<Response> create(@Valid Todo item) {
+        System.out.println("Thread is " + Thread.currentThread());
         return Panache.withTransaction(item::persist)
                 .replaceWith(
                         () -> Response.status(Status.CREATED).entity(item).build()
@@ -55,6 +56,7 @@ public class TodoResource {
     @PATCH
     @Path("/{id}")
     public Uni<Todo> update(@Valid Todo todo, @PathParam("id") Long id) {
+        System.out.println("Thread is " + Thread.currentThread());
         return Panache.withTransaction(
                 () -> Todo.<Todo>findById(id)
                         .onItem().transform(entity -> {
