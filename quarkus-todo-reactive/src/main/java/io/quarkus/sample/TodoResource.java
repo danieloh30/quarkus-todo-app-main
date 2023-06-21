@@ -28,13 +28,6 @@ public class TodoResource {
     }
 
     @GET
-    @Path("/blocking")
-    public List<Todo> getAllBlocking() {
-        return getAll()
-                .await().indefinitely();
-    }
-
-    @GET
     @Path("/{id}")
     public Uni<Todo> getOne(@PathParam("id") Long id) {
         return Panache.withTransaction(
