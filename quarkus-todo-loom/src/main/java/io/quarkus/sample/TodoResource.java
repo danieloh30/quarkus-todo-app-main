@@ -1,11 +1,9 @@
 package io.quarkus.sample;
 
-import io.quarkus.hibernate.orm.panache.Panache;
 import io.quarkus.panache.common.Sort;
 
 import io.smallrye.common.annotation.NonBlocking;
 import io.smallrye.common.annotation.RunOnVirtualThread;
-import jakarta.transaction.SystemException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.*;
