@@ -69,6 +69,7 @@ public class TodoResource {
     @Transactional
     @RunOnVirtualThread
     public Response deleteCompleted() {
+        System.out.println("Thread is " + Thread.currentThread());
         Todo.deleteCompleted();
         return Response.noContent().build();
     }
@@ -78,6 +79,7 @@ public class TodoResource {
     @Path("/{id}")
     @RunOnVirtualThread
     public Response deleteOne(@PathParam("id") Long id) {
+        System.out.println("Thread is " + Thread.currentThread());
         Todo entity = Todo.findById(id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
@@ -85,20 +87,5 @@ public class TodoResource {
         entity.delete();
         return Response.noContent().build();
     }
-
-    // Fix the VT issue manually
-    // @POST
-    // @RunOnVirtualThread
-    // public Response create(@Valid Todo item) throws SystemException, NotSupportedException {
-    //     System.out.println("Thread for create() is " + Thread.currentThread());
-    //     try {
-    //         Panache.getTransactionManager().begin();
-    //         item.persist();
-    //         Panache.getTransactionManager().commit();
-    //     } catch (Exception e) {
-    //         Panache.getTransactionManager().rollback();
-    //     }
-    //     return Response.status(Status.CREATED).entity(item).build();
-    // }
 
 }
