@@ -10,10 +10,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
 import java.util.List;
 
-
 @Path("/api")
-@Produces("application/json")
-@Consumes("application/json")
 public class TodoResource {
 
     private void log() {
