@@ -2,6 +2,7 @@ package io.quarkus.sample;
 
 import io.quarkus.hibernate.reactive.panache.Panache;
 import io.quarkus.hibernate.reactive.panache.PanacheEntityBase;
+import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Sort;
 import io.smallrye.mutiny.Uni;
 import jakarta.validation.Valid;
@@ -13,6 +14,10 @@ import java.util.List;
 
 @Path("/api")
 public class TodoResource {
+        
+    private void log() {
+        Log.infof("Called on %s", Thread.currentThread());
+    }
 
     @OPTIONS
     public Response opt() {
@@ -21,7 +26,7 @@ public class TodoResource {
 
     @GET
     public Uni<List<Todo>> getAll() {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         return Panache.withTransaction(
                 () -> Todo.findAll(Sort.by("order")).list()
         );
@@ -39,7 +44,7 @@ public class TodoResource {
 
     @POST
     public Uni<Response> create(@Valid Todo item) {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         return Panache.withTransaction(item::persist)
                 .replaceWith(
                         () -> Response.status(Status.CREATED).entity(item).build()
@@ -49,7 +54,7 @@ public class TodoResource {
     @PATCH
     @Path("/{id}")
     public Uni<Todo> update(@Valid Todo todo, @PathParam("id") Long id) {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         return Panache.withTransaction(
                 () -> Todo.<Todo>findById(id)
                         .onItem().transform(entity -> {

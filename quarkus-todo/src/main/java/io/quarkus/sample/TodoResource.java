@@ -1,5 +1,6 @@
 package io.quarkus.sample;
 
+import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Sort;
 
 import jakarta.transaction.Transactional;
@@ -15,6 +16,10 @@ import java.util.List;
 @Consumes("application/json")
 public class TodoResource {
 
+    private void log() {
+        Log.infof("Called on %s", Thread.currentThread());
+    }
+    
     @OPTIONS
     public Response opt() {
         return Response.ok().build();
@@ -22,7 +27,7 @@ public class TodoResource {
 
     @GET
     public List<Todo> getAll() {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         return Todo.listAll(Sort.by("order"));
     }
 
@@ -39,7 +44,7 @@ public class TodoResource {
     @POST
     @Transactional
     public Response create(@Valid Todo item) {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         item.persist();
         return Response.status(Status.CREATED).entity(item).build();
     }
@@ -48,7 +53,7 @@ public class TodoResource {
     @Path("/{id}")
     @Transactional
     public Response update(@Valid Todo todo, @PathParam("id") Long id) {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         Todo entity = Todo.findById(id);
         entity.id = id;
         entity.completed = todo.completed;

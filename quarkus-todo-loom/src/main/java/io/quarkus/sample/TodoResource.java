@@ -1,5 +1,6 @@
 package io.quarkus.sample;
 
+import io.quarkus.logging.Log;
 import io.quarkus.panache.common.Sort;
 
 import io.smallrye.common.annotation.NonBlocking;
@@ -15,6 +16,10 @@ import java.util.List;
 @Path("/api")
 public class TodoResource {
 
+    private void log() {
+		Log.infof("Called on %s", Thread.currentThread());
+	}
+
     @OPTIONS
     @NonBlocking
     public Response opt() {
@@ -24,7 +29,7 @@ public class TodoResource {
     @GET
     @RunOnVirtualThread
     public List<Todo> getAll() {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         return Todo.listAll(Sort.by("order"));
     }
 
@@ -32,6 +37,7 @@ public class TodoResource {
     @Path("/{id}")
     @RunOnVirtualThread
     public Todo getOne(@PathParam("id") Long id) {
+        log();
         Todo entity = Todo.findById(id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
@@ -43,7 +49,7 @@ public class TodoResource {
     @Transactional
     @RunOnVirtualThread
     public Response create(@Valid Todo item) {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         item.persist();
         return Response.status(Status.CREATED).entity(item).build();
     }
@@ -53,7 +59,7 @@ public class TodoResource {
     @Transactional
     @RunOnVirtualThread
     public Response update(@Valid Todo todo, @PathParam("id") Long id) {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         Todo entity = Todo.findById(id);
         entity.id = id;
         entity.completed = todo.completed;
@@ -67,7 +73,7 @@ public class TodoResource {
     @Transactional
     @RunOnVirtualThread
     public Response deleteCompleted() {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         Todo.deleteCompleted();
         return Response.noContent().build();
     }
@@ -77,7 +83,7 @@ public class TodoResource {
     @Path("/{id}")
     @RunOnVirtualThread
     public Response deleteOne(@PathParam("id") Long id) {
-        System.out.println("Thread is " + Thread.currentThread());
+        log();
         Todo entity = Todo.findById(id);
         if (entity == null) {
             throw new WebApplicationException("Todo with id of " + id + " does not exist.", Status.NOT_FOUND);
