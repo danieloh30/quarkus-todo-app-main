@@ -10,11 +10,11 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
+    <artifactId>quarkus-todo-virtualthread</artifactId>
+
     <properties>
         <maven.compiler.release>21</maven.compiler.release>
     </properties>
-
-    <artifactId>quarkus-todo-app-loom</artifactId>
 
     <dependencies>
         <dependency>

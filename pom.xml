@@ -41,6 +41,7 @@
   <modules>
     <module>quarkus-todo</module>
     <module>quarkus-todo-reactive</module>
-    <module>quarkus-todo-loom</module>
+    <module>quarkus-todo-virtualthread</module>
+    <module>quarkus-kafka-virtualthread</module>
   </modules>
 </project>
