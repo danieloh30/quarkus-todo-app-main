@@ -31,8 +31,8 @@ class TodoResourceTest {
         get("/api/1").then()
                 .statusCode(HttpStatus.SC_OK)
                 .contentType(MediaType.APPLICATION_JSON)
-                .body("title", is("Introduction to Quarkus"))
-                .body("completed", is(true));
+                .body("title", is("Introduction to Quarkus - Reactive"))
+                .body("completed", is(false));
     }
 
     @Test
@@ -108,7 +108,7 @@ class TodoResourceTest {
         List<Todo> todos = get("/api").then()
                 .statusCode(HttpStatus.SC_OK)
                 .extract().body().as(getTodoTypeRef());
-        assertEquals(3, todos.size());
+        assertEquals(4, todos.size());
     }
 
     private TypeRef<List<Todo>> getTodoTypeRef() {
