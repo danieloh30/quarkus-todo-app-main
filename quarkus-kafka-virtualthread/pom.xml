@@ -82,7 +82,7 @@
         <dependency>
             <groupId>org.mvnpm</groupId>
             <artifactId>vaadin-web-components</artifactId>
-            <version>23.3.8</version>
+            <version>24.0.2</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
