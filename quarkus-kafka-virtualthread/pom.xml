@@ -69,7 +69,7 @@
         <dependency>
             <groupId>me.escoffier.loom</groupId>
             <artifactId>loom-unit</artifactId>
-            <version>0.2.0</version>
+            <version>0.3.0</version>
             <scope>test</scope>
         </dependency>
 
