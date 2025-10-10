@@ -22,6 +22,7 @@ jobs:
     permissions:
       # Required for the Dependency Submission API
       contents: write
+      pull-requests: write
 
     steps:
       - uses: actions/checkout@v4
