@@ -19,6 +19,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    permissions:
+      # Required for the Dependency Submission API
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
       - name: Set up JDK 25
